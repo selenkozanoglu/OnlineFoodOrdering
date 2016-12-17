@@ -49,7 +49,11 @@
                     &nbsp;&nbsp;
                     <div id='div5'>
 	 <h3>Burger House</h3>
-                           <a href="BurgerHouse.jsp"><img src="resources/images/burger.jpg" alt="Burger House" title="Burger house"></a>        
+                           <a href="BurgerHouse.jsp"><img src="resources/images/burger.jpg" alt="Burger House" title="Burger house"></a>  
+       <div id='div5'>
+	 <h3>Trend 216</h3>
+                           <a href="Trend216.jsp"><img src="resources/images/Trend216.jpg" alt="Trend 216" title="Trend 216"></a>                            
+                                 
                         </div>
                         </div>
 	
