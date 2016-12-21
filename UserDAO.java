@@ -1,4 +1,5 @@
-package SangFoodproject;
+package SangFood;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.resource.spi.ConnectionManager;
+import SangFood.ConnectionManager;
+import SangFood.UserBean;
 
 
 public class UserDAO {
-
 	static Connection currentCon=null;
 	static ResultSet rs=null;
 	
@@ -91,12 +92,42 @@ public class UserDAO {
 		
 		
 	}
-
-	public static void  EditProfile(String newlastname,String newemail,String newaddress){
+public static Boolean register (UserBean user){
 		PreparedStatement stmt = null;
 		currentCon = ConnectionManager.getConnection();
-		String updateQuery = "update users set ulame=?, u_email=?, uaddress=?   where username =?";
+		String updateQuery = "INSERT INTO users ( user_type,password,u_email,firstName,lastName,username,user_address,usrtel) values (? , ? , ?, ? ,? , ? , ?, ?)";
+			try {
+				stmt = currentCon.prepareStatement(updateQuery);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				//stmt.setString(1, "73");
+				stmt.setString(1, "1");
+				stmt.setString(2, user.getPassword());
+				stmt.setString(3, user.getu_email());
+				stmt.setString(4, user.getFirstName()); 
+				stmt.setString(5, user.getLastName());
+				stmt.setString(6, user.getUsername());
+				stmt.setString(7, user.getUserAddress());
+				stmt.setString(8, user.getUsrTel());
+				int i = stmt.executeUpdate();
+				if (i > 0 ) user.setValid(true);
+				else user.setValid(false);
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			return user.valid;
+	}
+	public static void ChangePassword (String newpassword,String username){ 
 		
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String updateQuery = "update users set password=? where username =?";
+				
 		try {
 			stmt = currentCon.prepareStatement(updateQuery);
 		} catch (SQLException e1) {
@@ -104,10 +135,8 @@ public class UserDAO {
 			e1.printStackTrace();
 		}
 		try {
-			stmt.setString(1,newlastname);
-			stmt.setString(2,newemail);
-			stmt.setString(3,newaddress);
-			
+			stmt.setString(1,newpassword);
+			stmt.setString(2,username);
 			
 			stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -115,8 +144,91 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		
+
+}
+	public static void addRestaurant(RestaurantBean restaurant){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String insertQuery = "INSERT INTO restaurants (rid,rest_address,rest_name,owner_id,status) values (? , ? , ?,?,?)";
 		
+		try {
+			stmt = currentCon.prepareStatement(insertQuery);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			stmt.setString(1, "9");
+			stmt.setString(2, restaurant.getRestAddress());
+			stmt.setString(3, restaurant.getRestName());
+			stmt.setString(4, restaurant.getOwnerId());
+			stmt.setString(5, "1");
+			
+		    stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+			
+	}
+	/*public static boolean restaurantRegistration (RestaurantBean restaurant){
+		
+	}*/
+	
+	public static void deleteRestaurant(String rest_id){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String updateQuery = "delete from restaurants where rid=?";
+		
+			try {
+				stmt = currentCon.prepareStatement(updateQuery);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+                            try {
+				stmt.setString(1, rest_id);
+				stmt.executeUpdate();
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 	}
+	public static void addRestaurantForm(RestaurantBean restaurant){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String insertQuery = "INSERT INTO restaurants (rid,rest_address,rest_name,owner_id,rest_info,status) values (? , ? , ?,?,?,?)";
+		
+		try {
+			stmt = currentCon.prepareStatement(insertQuery);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			stmt.setString(1, "10");
+			stmt.setString(2, restaurant.getRestAddress());
+			stmt.setString(3, restaurant.getRestName());
+			stmt.setString(4, restaurant.getOwnerId());
+			stmt.setString(5, restaurant.getRestInfo());
+			stmt.setString(6, "0");
+			
+		    stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+			
+	
+	}
+	
+	
+
 	
 }
+
+
