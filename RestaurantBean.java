@@ -1,15 +1,17 @@
 package SangFood;
 
 public class RestaurantBean {
-	private int rid;
+	private String rid;
 	private String rest_address;
 	private String rest_name;
 	private String owner_id;
+	private String rest_info;
+	private int status;
 	
-	public int getRid(){
+	public String getRid(){
 		return rid;
 	}
-	public void setRid(int newRid){
+	public void setRid(String newRid){
 		rid=newRid;
 	}
 	public String getRestAddress(){
@@ -33,5 +35,20 @@ public class RestaurantBean {
 		owner_id=newOwnerId;
 	
 	}
+	public String getRestInfo(){
+		return rest_info;
+	}
+	public void setRestInfo(String newRestInfo){
+		rest_info=newRestInfo;
+	
+	}
+	public int getStatus(){
+		return status;
+	}
+	public void setStatus(int newStatus){
+		status=newStatus;
+	
+	}
+	
 	
 }
