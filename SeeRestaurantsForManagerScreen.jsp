@@ -7,7 +7,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="resources/css/NavigationBar.css" />
-<title>Restaurantss</title>
+<title>Restaurants</title>
 </head>
 <body>
 <sql:setDataSource var="myDC" driver="com.mysql.jdbc.Driver"
@@ -15,7 +15,7 @@
      user="root"  password="1234"/>
 
 <sql:query dataSource="${myDC}" var="list_restaurants">
-SELECT * from restaurants;
+SELECT * from restaurants where status=1;
 </sql:query>
 <ul>
   <li><a href="ManagerLogged.jsp">Home</a></li>
