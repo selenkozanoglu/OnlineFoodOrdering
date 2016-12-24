@@ -225,7 +225,56 @@ public static Boolean register (UserBean user){
 			
 	
 	}
+	public static void addBasket(OrdersBean order){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String insertQuery = "INSERT INTO orders (rest_id,user_id,food_id,order_sum) values (? , ? , ?,?)";
+		
+		try {
+			stmt = currentCon.prepareStatement(insertQuery);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 	
+			stmt.setString(1, "9");
+			stmt.setString(2, order.getuserName());
+			stmt.setInt(3, order.getFoodId());
+	
+			stmt.setString(4, order.getPrice());
+			
+		    stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+			
+	}
+	public static void setRest(String rid,int status){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String updateQuery = "update restaurants set status=? where rid =?";
+				
+		try {
+			stmt = currentCon.prepareStatement(updateQuery);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			stmt.setInt(1,status);
+			stmt.setString(2,rid);
+			
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 
 	
