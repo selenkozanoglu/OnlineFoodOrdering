@@ -275,6 +275,79 @@ public static Boolean register (UserBean user){
 		}
 		
 	}
+	public static void setOrder(int order_id){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String updateQuery = "update orders set order_status=? where order_id =?";
+			
+		try {
+			stmt = currentCon.prepareStatement(updateQuery);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			stmt.setInt(1,1);
+			stmt.setInt(2,order_id);
+			
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+}
+	public static String GetRestaurantId(String username){
+		PreparedStatement stmt=null;
+       String rid="";
+		String restaurantIdQuery= "select rid from restaurants r1,users u1 where u1.user_id = r1.owner_id AND username = ?";
+	
+		try{
+			//connect to DB
+			currentCon=ConnectionManager.getConnection();
+			stmt = currentCon.prepareStatement(restaurantIdQuery);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			rs = stmt.executeQuery();
+			while (rs.next())
+			
+			rid=rs.getString("rid");
+			
+			
+	}
+		 catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+		return rid;
+	}
+	public static void AddFood(RestMenuBean menu,int restaurant_id){
+		PreparedStatement stmt = null;
+		currentCon = ConnectionManager.getConnection();
+		String insertQuery = "INSERT INTO rest_foods (restaurant_id,food_name,food_type,price) values (? , ? , ?,?)";
+	  
+		try {
+			stmt = currentCon.prepareStatement(insertQuery);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			stmt.setInt(1,restaurant_id);
+			stmt.setString(2, menu.getFoodName());
+			stmt.setString(3, menu.getFoodType());
+			stmt.setString(4, menu.getPrice());
+	
+			
+		    stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+			
+	}
 	
 
 	
