@@ -10,34 +10,43 @@
 <title>Insert title here</title>
 </head>
 <body>
-<sql:setDataSource var="myDC" driver="com.mysql.jdbc.Driver"
-     url="jdbc:mysql://localhost/sangFood"
-     user="root"  password="1234"/>
+<sql:query dataSource="${myDC}" var="list_orders">
+select *, o1.user_id uid from restaurants r1 , orders o1, users u1, rest_foods rs1,
+order_status os1
+where 
+r1.owner_id = u1.user_id and u1.username=? and o1.rest_id = r1.rid
+and rs1.food_id = o1.food_id and os1.status_id = o1.order_status
 
-<sql:query dataSource="${myDC}" var="list_incomingRestaurants">
-SELECT * from restaurants   where status ='0';
-
+<sql:param value='${sessionScope.currentSessionUser}'/>
 </sql:query>
 <div align="center">
         <table border="1" cellpadding="5">
-            <caption><h1>Incoming Restaurants</h1></caption>
+            <caption><h1>Waiting Orders</h1></caption>
             <tr>
-                <th><h2>Restaurant ID</h2></th>
-                <th><h2>Restaurant Address</h2></th>
-                <th><h2>Restaurant Name</h2></th>
-                <th><h2>Owner ID</h2></th>
-                <th><h2>Restaurant Info</h2></th>
-                
+                <th><h2>Order ID</h2></th>
+                <th><h2>Rest Name</h2></th>
+                <th><h2>User ID</h2></th>
+<th><h2>Food Name</h2></th>
+<th><h2>Order Adress</h2></th>
+<th><h2>Order Sum</h2></th>
+<th><h2>Taken</h2></th>
+<th><h2>Order Status</h2></th>
+
             </tr>
-            <c:forEach var="comingRests" items="${list_incomingRestaurants.rows}">
+            <c:forEach var="orders" items="${list_orders.rows}">
                 <tr>
-                    <td><b><h1><c:out value="${comingRests.rid}" /></h1></b> </td> 
-                    <td><b><h1><c:out value="${comingRests.rest_address}" /></h1></b> </td>
-                    <td><b><h1><c:out value="${comingRests.rest_name}" /></h1></b></a></td>
-                    <td><b><h1><c:out value="${comingRests.owner_id}" /></h1></b></a></td>
-                    <td><b><h1><c:out value="${comingRests.rest_info}" /></h1></b></a></td>
-                    <td><a href="AcceptRestaurantServlet?rid=${comingRests.rid}&act=accept"><button type="button">Accept</button></a></td>
-                    <td><a href="AcceptRestaurantServlet?rid=${comingRests.rid}&act=reject"><button type="button">Reject</button></a></td>
+                    <td><b><h1><c:out value="${orders.order_id}" /></h1></b> </td> 
+                    <td><b><h1><c:out value="${orders.rest_name}" /></h1></b> </td>
+                    <td><b><h1><c:out value="${orders.user_id}" /></h1></b></a></td>
+                    <td><b><h1><c:out value="${orders.food_name}" /></h1></b></a></td>
+  					 <td><b><h1><c:out value="${orders.user_address}" /></h1></b></a></td>
+                     <td><b><h1><c:out value="${orders.order_sum} TL" /></h1></b></a></td>
+                     
+               		<td><b><h1><c:out value="${orders.status_name}" /></h1></b></a></td>       
+		<td><a href="OrderTakenServlet?order_id=${orders.order_id}"><button type="button">Accept Order</button></a></td>
+
+		
+
                 </tr>
             </c:forEach>
         </table>
