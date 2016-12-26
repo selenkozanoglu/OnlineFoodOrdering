@@ -52,3 +52,18 @@ create table cities (
 city_id int not null,
 city_name varchar(20),
 constraint PK_cities primary key (city_id));
+
+create table order_status(
+status_id int,
+status_name varchar(20)
+);
+
+insert into order_status (status_id,status_name)
+values (0, 'order is waiting');
+
+insert into order_status (status_id,status_name)
+values (1, 'order deliveried');
+
+alter table orders  modify column order_date timestamp
+
+alter table orders add order_status int
