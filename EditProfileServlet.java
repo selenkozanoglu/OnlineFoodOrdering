@@ -38,15 +38,18 @@ public class EditProfileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		String newlastname = request.getParameter("newlastname");
-		String newemail=request.getParameter(newemail);
-		String newaddress=request.getParameter(newaddress);
+		String newlastname = request.getParameter("NewLastname");
+		String newAddress = request.getParameter("NewAddress");
+		String newemail=request.getParameter("NewEmail");
+		String newPhoneNumber=request.getParameter("NewTel");
+		
+	
 		
 		System.out.println(session.getAttribute("currentSessionUser"));
 		String username = (String) session.getAttribute("currentSessionUser");
 		//String userid ="selo";
 		System.out.println("servlete access" + username);
-		UserDAO.EditProfile(newlastname, newemail, newaddress);
+		UserDAO.EditProfile(newlastname, newemail, newAddress,newPhoneNumber,username);
 		
 		System.out.println("successful");
 		request.setAttribute("message", "user information Succesfuly Changed");

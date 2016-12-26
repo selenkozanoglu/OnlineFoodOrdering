@@ -1,5 +1,4 @@
-package SangFood;
-
+package SangFoodproject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import SangFood.ConnectionManager;
-import SangFood.UserBean;
+import javax.resource.spi.ConnectionManager;
 
 
 public class UserDAO {
+
 	static Connection currentCon=null;
 	static ResultSet rs=null;
 	
@@ -92,42 +91,12 @@ public class UserDAO {
 		
 		
 	}
-public static Boolean register (UserBean user){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String updateQuery = "INSERT INTO users ( user_type,password,u_email,firstName,lastName,username,user_address,usrtel) values (? , ? , ?, ? ,? , ? , ?, ?)";
-			try {
-				stmt = currentCon.prepareStatement(updateQuery);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			try {
-				//stmt.setString(1, "73");
-				stmt.setString(1, "1");
-				stmt.setString(2, user.getPassword());
-				stmt.setString(3, user.getu_email());
-				stmt.setString(4, user.getFirstName()); 
-				stmt.setString(5, user.getLastName());
-				stmt.setString(6, user.getUsername());
-				stmt.setString(7, user.getUserAddress());
-				stmt.setString(8, user.getUsrTel());
-				int i = stmt.executeUpdate();
-				if (i > 0 ) user.setValid(true);
-				else user.setValid(false);
 
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-			return user.valid;
-	}
-	public static void ChangePassword (String newpassword,String username){ 
-		
+	public static void  EditProfile(String newlastname,String newemail,String newaddress,String newphonenumber,String username){
 		PreparedStatement stmt = null;
 		currentCon = ConnectionManager.getConnection();
-		String updateQuery = "update users set password=? where username =?";
-				
+		String updateQuery = "update users set  u_email=?,lastName=?,user_address=?,usrtel=? where username =?";
+		
 		try {
 			stmt = currentCon.prepareStatement(updateQuery);
 		} catch (SQLException e1) {
@@ -135,137 +104,13 @@ public static Boolean register (UserBean user){
 			e1.printStackTrace();
 		}
 		try {
-			stmt.setString(1,newpassword);
-			stmt.setString(2,username);
-			
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 
-}
-	public static void addRestaurant(RestaurantBean restaurant){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String insertQuery = "INSERT INTO restaurants (rid,rest_address,rest_name,owner_id,status) values (? , ? , ?,?,?)";
-		
-		try {
-			stmt = currentCon.prepareStatement(insertQuery);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			stmt.setString(1, "9");
-			stmt.setString(2, restaurant.getRestAddress());
-			stmt.setString(3, restaurant.getRestName());
-			stmt.setString(4, restaurant.getOwnerId());
-			stmt.setString(5, "1");
+			stmt.setString(1,newemail);
+			stmt.setString(2,newlastname);
+			stmt.setString(3, newaddress);
+			stmt.setString(4, newphonenumber);
+			stmt.setString(5, username);
 			
-		    stmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-			
-	}
-	/*public static boolean restaurantRegistration (RestaurantBean restaurant){
-		
-	}*/
-	
-	public static void deleteRestaurant(String rest_id){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String updateQuery = "delete from restaurants where rid=?";
-		
-			try {
-				stmt = currentCon.prepareStatement(updateQuery);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-                            try {
-				stmt.setString(1, rest_id);
-				stmt.executeUpdate();
-
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-	}
-	public static void addRestaurantForm(RestaurantBean restaurant){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String insertQuery = "INSERT INTO restaurants (rid,rest_address,rest_name,owner_id,rest_info,status) values (? , ? , ?,?,?,?)";
-		
-		try {
-			stmt = currentCon.prepareStatement(insertQuery);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			stmt.setString(1, "10");
-			stmt.setString(2, restaurant.getRestAddress());
-			stmt.setString(3, restaurant.getRestName());
-			stmt.setString(4, restaurant.getOwnerId());
-			stmt.setString(5, restaurant.getRestInfo());
-			stmt.setString(6, "0");
-			
-		    stmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-			
-	
-	}
-	public static void addBasket(OrdersBean order){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String insertQuery = "INSERT INTO orders (rest_id,user_id,food_id,order_sum) values (? , ? , ?,?)";
-		
-		try {
-			stmt = currentCon.prepareStatement(insertQuery);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-	
-			stmt.setString(1, "9");
-			stmt.setString(2, order.getuserName());
-			stmt.setInt(3, order.getFoodId());
-	
-			stmt.setString(4, order.getPrice());
-			
-		    stmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-			
-	}
-	public static void setRest(String rid,int status){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String updateQuery = "update restaurants set status=? where rid =?";
-				
-		try {
-			stmt = currentCon.prepareStatement(updateQuery);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			stmt.setInt(1,status);
-			stmt.setString(2,rid);
 			
 			
 			stmt.executeUpdate();
@@ -274,83 +119,8 @@ public static Boolean register (UserBean user){
 			e.printStackTrace();
 		}
 		
-	}
-	public static void setOrder(int order_id){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String updateQuery = "update orders set order_status=? where order_id =?";
-			
-		try {
-			stmt = currentCon.prepareStatement(updateQuery);
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			stmt.setInt(1,1);
-			stmt.setInt(2,order_id);
-			
-			
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
-}
-	public static String GetRestaurantId(String username){
-		PreparedStatement stmt=null;
-       String rid="";
-		String restaurantIdQuery= "select rid from restaurants r1,users u1 where u1.user_id = r1.owner_id AND username = ?";
-	
-		try{
-			//connect to DB
-			currentCon=ConnectionManager.getConnection();
-			stmt = currentCon.prepareStatement(restaurantIdQuery);
-			stmt.setString(1, username);
-			ResultSet rs = stmt.executeQuery();
-			rs = stmt.executeQuery();
-			while (rs.next())
-			
-			rid=rs.getString("rid");
-			
-			
+		
 	}
-		 catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	
-		return rid;
-	}
-	public static void AddFood(RestMenuBean menu,int restaurant_id){
-		PreparedStatement stmt = null;
-		currentCon = ConnectionManager.getConnection();
-		String insertQuery = "INSERT INTO rest_foods (restaurant_id,food_name,food_type,price) values (? , ? , ?,?)";
-	  
-		try {
-			stmt = currentCon.prepareStatement(insertQuery);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			stmt.setInt(1,restaurant_id);
-			stmt.setString(2, menu.getFoodName());
-			stmt.setString(3, menu.getFoodType());
-			stmt.setString(4, menu.getPrice());
-	
-			
-		    stmt.executeUpdate();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	
-			
-	}
-	
-
 	
 }
-
-
