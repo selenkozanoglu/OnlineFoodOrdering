@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
- <link rel="stylesheet" href="resources/css/style.css" />
+ <link rel="stylesheet" href="resources/css/NavigationBar.css" />
 <title>Sang Food</title>
 </head>
 <body> 
-
+<%session.invalidate();%>
 <div id='div1'>
 
 <nav>
@@ -42,17 +43,17 @@
 	</div>
 	
 
-	 <div id='div4' >
+	 <div id='div5' >
 	 <h3>Sang Food House</h3>
-                           <a href="SangFoodHouse.jsp"><img src="resources/images/food-menu.jpg" alt="Sang Food house" title="Sang Food house"></a>
+                           <a href="RestMenu.jsp?restid=2"><img src="resources/images/food-menu.jpg" alt="Sang Food house" title="Sang Food house"></a>
                     <div style="width:500%" class="rests">
                     &nbsp;&nbsp;
-                    <div id='div5'>
+                    <div >
 	 <h3>Burger House</h3>
-                           <a href="BurgerHouse.jsp"><img src="resources/images/burger.jpg" alt="Burger House" title="Burger house"></a>  
-       <div id='div5'>
+                           <a href="RestMenu.jsp?restid=3"><img src="resources/images/burgerr.jpg" alt="Burger House" title="Burger house"></a>  
+       <div >
 	 <h3>Trend 216</h3>
-                           <a href="Trend216.jsp"><img src="resources/images/Trend216.jpg" alt="Trend 216" title="Trend 216"></a>                            
+                           <a href="RestMenu.jsp?restid=4"><img src="resources/images/Trend216.jpg" alt="Trend 216" title="Trend 216"></a>                            
                                  
                         </div>
                         </div>
