@@ -36,7 +36,7 @@ SELECT * from restaurants where status=1;
                     <td><b><h1><c:out value="${restaurants.rest_address}" /></h1></b></td>
                     <td><b><h1><c:out value="${restaurants.rest_name}" /></h1></b></td>
                     <td><b><h1><c:out value="${restaurants.owner_id}" /></h1></b></td>
-                    <td> <a href="deleteRestaurantServlet"><button type="button">Delete Restaurant</button></a></td>
+                    <td> <a href="DeleteRestaurantServlet?rid=${restaurants.rid}"><button type="button">Delete Restaurant</button></a></td>
                 </tr>
             </c:forEach>
         </table>
