@@ -66,3 +66,6 @@ values (1, 'order deliveried');
 
 ALTER TABLE users ADD user_city varchar(30);
 ALTER TABLE users ADD user_place varchar(30);
+
+alter table restaurants add rest_info varchar(300);
+alter table restaurants add  rest_phone varchar(100);
