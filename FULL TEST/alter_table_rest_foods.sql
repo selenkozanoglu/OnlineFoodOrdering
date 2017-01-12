@@ -1,0 +1,1 @@
+ALTER TABLE rest_foods ADD CONSTRAINT rest_foods1 UNIQUE (restaurant_id,food_name)
