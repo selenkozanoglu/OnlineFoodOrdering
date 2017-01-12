@@ -1,0 +1,24 @@
+public static void EditRestaurantProfile(String newrestaddress,String newphone,String newrestinfo,String owner_id){
+	PreparedStatement stmt = null;
+	currentCon = ConnectionManager.getConnection();
+	String updateQuery = "update restaurants set rest_info=?,rest_address=?, rest_phone=? where owner_id =?";
+			
+	try {
+		stmt = currentCon.prepareStatement(updateQuery);
+	} catch (SQLException e1) {
+		// TODO Auto-generated catch block
+		e1.printStackTrace();
+	}
+	try {
+		stmt.setString(1,newrestinfo);
+		stmt.setString(2,newrestaddress);
+		stmt.setString(3, newphone);
+		stmt.setString(4, owner_id );
+		
+		stmt.executeUpdate();
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+}
